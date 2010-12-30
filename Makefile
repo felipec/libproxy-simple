@@ -1,5 +1,8 @@
 CC := $(CROSS_COMPILE)gcc
 
+GCONF_CFLAGS := $(shell pkg-config --cflags gconf-2.0 gobject-2.0)
+GCONF_LIBS := $(shell pkg-config --libs gconf-2.0 gobject-2.0)
+
 CFLAGS := -O2 -ggdb -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -ansi -std=c99
 
 override CFLAGS += -D_GNU_SOURCE
@@ -12,7 +15,8 @@ version := $(shell ./get-version)
 all:
 
 libproxy.so: proxy.o
-libproxy.so: override CFLAGS += -fPIC
+libproxy.so: override CFLAGS += $(GCONF_CFLAGS) -fPIC
+libproxy.so: override LIBS += $(GCONF_LIBS)
 libproxy.so: override LDFLAGS += -Wl,-soname,libproxy.so.0
 
 all: libproxy.so
