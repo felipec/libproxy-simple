@@ -17,7 +17,7 @@ all:
 libproxy.so: proxy.o
 libproxy.so: override CFLAGS += $(GCONF_CFLAGS) -fPIC
 libproxy.so: override LIBS += $(GCONF_LIBS)
-libproxy.so: override LDFLAGS += -Wl,-soname,libproxy.so.0
+libproxy.so: override LDFLAGS += -Wl,-soname,libproxy.so.1
 
 all: libproxy.so
 
@@ -30,8 +30,8 @@ D = $(DESTDIR)
 
 install: libproxy.so libproxy.pc
 	mkdir -p $(D)/$(libdir)
-	install -m 755 libproxy.so $(D)/$(libdir)/libproxy.so.0
-	ln -sf libproxy.so.0 $(D)/$(libdir)/libproxy.so
+	install -m 755 libproxy.so $(D)/$(libdir)/libproxy.so.1
+	ln -sf libproxy.so.1 $(D)/$(libdir)/libproxy.so
 	mkdir -p $(D)/$(prefix)/include/libproxy
 	install -m 644 proxy.h $(D)/$(prefix)/include/
 	mkdir -p $(D)/$(libdir)/pkgconfig
